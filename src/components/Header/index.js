@@ -26,6 +26,7 @@ class Header extends Component {
     cart: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.shape()),
     }).isRequired,
+    categoryId: PropTypes.number.isRequired,
   };
 
   componentDidMount() {
@@ -35,7 +36,7 @@ class Header extends Component {
   }
 
   render() {
-    const { categories, cart } = this.props;
+    const { categories, cart, categoryId } = this.props;
 
     return (
       <Container>
@@ -56,7 +57,7 @@ class Header extends Component {
                 <LinkItem
                   to={`/categories/${category.id}`}
                   activeClassName="active"
-                  // active={category.id === categoryId}
+                  active={category.id === categoryId}
                 >
                   {category.title}
                 </LinkItem>
