@@ -46,6 +46,7 @@ const Cart = ({ cart, updateProduct, removeProduct }) => (
                       type="number"
                       defaultValue={product.quantity}
                       min={1}
+                      max={999}
                       onChange={(e) => {
                         updateProduct(product.id, e.target.value);
                       }}
