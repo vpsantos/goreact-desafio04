@@ -26,7 +26,11 @@ class Header extends Component {
     cart: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.shape()),
     }).isRequired,
-    categoryId: PropTypes.number.isRequired,
+    categoryId: PropTypes.number,
+  };
+
+  static defaultProps = {
+    categoryId: null,
   };
 
   componentDidMount() {
@@ -56,8 +60,7 @@ class Header extends Component {
               <li key={category.id}>
                 <LinkItem
                   to={`/categories/${category.id}`}
-                  activeClassName="active"
-                  active={category.id === categoryId}
+                  active={category.id === categoryId ? 'active' : ''}
                 >
                   {category.title}
                 </LinkItem>

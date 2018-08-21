@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import CurrencyFormat from 'react-currency-format';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as ProductActions } from '../../store/ducks/product';
@@ -67,7 +69,16 @@ class Product extends Component {
             <Info>
               <strong>{product.data.name}</strong>
               <small>{product.data.brand}</small>
-              <span>{`R$${product.data.price}`}</span>
+              <span><CurrencyFormat
+                  value={product.data.price}
+                  displayType="text"
+                  thousandSeparator="."
+                  prefix="R$"
+                  decimalSeparator=","
+                  decimalScale={2}
+                  fixedDecimalScale
+                />
+              </span>
               <Button
                 onClick={() => {
                   addProduct(product.data);

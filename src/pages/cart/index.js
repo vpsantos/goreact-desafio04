@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import CurrencyFormat from 'react-currency-format';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as CartActions } from '../../store/ducks/cart';
@@ -39,21 +41,41 @@ const Cart = ({ cart, updateProduct, removeProduct }) => (
                     <small>{product.brand}</small>
                   </td>
                   <td>
-                    <span>{`R$${product.price}`}</span>
+                    <span>
+                      <CurrencyFormat
+                        value={product.price}
+                        displayType="text"
+                        thousandSeparator="."
+                        prefix="R$"
+                        decimalSeparator=","
+                        decimalScale={2}
+                        fixedDecimalScale
+                      />
+                    </span>
                   </td>
                   <td>
                     <input
                       type="number"
-                      defaultValue={product.quantity}
                       min={1}
-                      max={999}
+                      max={99}
+                      defaultValue={product.quantity}
                       onChange={(e) => {
-                        updateProduct(product.id, e.target.value);
+                        updateProduct(product.id, Number(e.target.value));
                       }}
                     />
                   </td>
                   <td>
-                    <span>{`R$${product.subtotal}`}</span>
+                    <span>
+                      <CurrencyFormat
+                        value={product.subtotal}
+                        displayType="text"
+                        thousandSeparator="."
+                        prefix="R$"
+                        decimalSeparator=","
+                        decimalScale={2}
+                        fixedDecimalScale
+                      />
+                    </span>
                   </td>
                   <td>
                     <button
@@ -72,7 +94,17 @@ const Cart = ({ cart, updateProduct, removeProduct }) => (
         </ListContainer>
         <Total>
           <strong>Total</strong>
-          <span>{`R$${cart.total}`}</span>
+          <span>
+            <CurrencyFormat
+              value={cart.total}
+              displayType="text"
+              thousandSeparator="."
+              prefix="R$"
+              decimalSeparator=","
+              decimalScale={2}
+              fixedDecimalScale
+            />
+          </span>
         </Total>
       </Fragment>
     )}
@@ -88,11 +120,11 @@ Cart.propTypes = {
         name: PropTypes.string,
         brand: PropTypes.string,
         price: PropTypes.number,
-        quantity: PropTypes.any,
-        subtotal: PropTypes.any,
+        quantity: PropTypes.number,
+        subtotal: PropTypes.number,
       }),
     ),
-    total: PropTypes.any.isRequired,
+    total: PropTypes.number.isRequired,
   }).isRequired,
   removeProduct: PropTypes.func.isRequired,
   updateProduct: PropTypes.func.isRequired,

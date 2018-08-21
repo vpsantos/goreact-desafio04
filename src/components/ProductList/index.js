@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CurrencyFormat from 'react-currency-format';
+
 import { Container, Product } from './styles';
 
 const ProductList = ({ products }) => (
@@ -10,7 +12,17 @@ const ProductList = ({ products }) => (
         <img src={product.image} alt={product.name} />
         <strong>{product.name}</strong>
         <small>{product.brand}</small>
-        <span>{`R$${product.price}`}</span>
+        <span>
+          <CurrencyFormat
+            value={product.price}
+            displayType="text"
+            thousandSeparator="."
+            prefix="R$"
+            decimalSeparator=","
+            decimalScale={2}
+            fixedDecimalScale
+          />
+        </span>
       </Product>
     ))}
   </Container>

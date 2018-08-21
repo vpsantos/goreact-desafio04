@@ -12,6 +12,8 @@ import ProductList from '../../components/ProductList';
 import { Container } from './styles';
 
 class Home extends Component {
+  categoriesLoaded = false;
+
   static propTypes = {
     categories: PropTypes.shape({
       data: PropTypes.arrayOf(
@@ -34,8 +36,6 @@ class Home extends Component {
     }).isRequired,
     getCategoryProductsRequest: PropTypes.func.isRequired,
   };
-
-  categoriesLoaded = false;
 
   componentDidMount() {
     const { categories } = this.props;

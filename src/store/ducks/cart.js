@@ -1,5 +1,3 @@
-import { Decimal } from 'decimal.js-light';
-
 /**
  * Types
  */
@@ -27,54 +25,51 @@ export default function cart(state = INITIAL_STATE, action) {
         const quantity = data[index].quantity + 1;
 
         data[index].quantity = quantity;
-        data[index].subtotal = new Decimal(data[index].price).mul(quantity).toFixed(2);
-
-        const total = new Decimal(state.total).add(data[index].price).toFixed(2);
+        data[index].subtotal = data[index].price * quantity;
 
         return {
           data,
-          total,
+          total: data.map(product => product.subtotal).reduce((prev, next) => prev + next),
         };
       }
 
-      const newProduct = action.payload.product;
-      newProduct.quantity = 1;
-      newProduct.subtotal = newProduct.price;
+      const { product } = action.payload;
+      product.quantity = 1;
+      product.subtotal = product.price;
+
+      const data = [...state.data, product];
 
       return {
-        data: [...state.data, newProduct],
-        total: new Decimal(state.total).add(newProduct.price).toFixed(2),
+        data,
+        total: data.map(product => product.subtotal).reduce((prev, next) => prev + next),
       };
     }
     case Types.REMOVE_PRODUCT: {
-      const amount = new Decimal(action.payload.product.price).mul(action.payload.product.quantity);
+      const data = state.data.filter(product => product.id !== action.payload.product.id);
 
       return {
-        data: state.data.filter(product => product.id !== action.payload.product.id),
-        total: new Decimal(state.total).sub(amount).toFixed(2),
+        data,
+        total:
+          data.length > 0
+            ? data.map(product => product.subtotal).reduce((prev, next) => prev + next)
+            : 0,
       };
     }
     case Types.UPDATE_PRODUCT: {
-      if (!action.payload.quantity || new Decimal(action.payload.quantity).isZero()) {
+      if (!action.payload.quantity) {
         return state;
       }
 
       const index = state.data.findIndex(product => product.id === action.payload.id);
 
       const { data } = state;
-      const currentSubtotal = data[index].subtotal;
 
       data[index].quantity = action.payload.quantity;
-      data[index].subtotal = new Decimal(data[index].price).mul(action.payload.quantity).toFixed(2);
-
-      const total = new Decimal(state.total)
-        .sub(currentSubtotal)
-        .add(data[index].subtotal)
-        .toFixed(2);
+      data[index].subtotal = data[index].price * action.payload.quantity;
 
       return {
         data,
-        total,
+        total: data.map(item => item.subtotal).reduce((prev, next) => prev + next),
       };
     }
     default:

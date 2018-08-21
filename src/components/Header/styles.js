@@ -72,7 +72,6 @@ export const LinkItem = styled(NavLink)`
   opacity: ${props => (props.active ? 1 : 0.6)};
   letter-spacing: -0.9px;
 
-  /* &.active, */
   &:hover { {
     opacity: 1;
   }
