@@ -7,7 +7,6 @@ injectGlobal`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    outline: 0;
   }
 
   html,
@@ -22,6 +21,10 @@ injectGlobal`
     background: #FFF;
     font-family: Helvetica, Arial, sans-serif;
     color: #000;
+  }
+
+  input, button {
+    outline: 0;
   }
 
   button {
