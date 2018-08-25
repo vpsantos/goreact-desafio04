@@ -5,31 +5,39 @@ import { Link } from 'react-router-dom';
 export const Container = styled.div`
   padding: 20px 0;
   display: flex;
+  flex-shrink: 0;
 
   ${props => props.loading
     && css`
       justify-content: center;
       align-items: center;
     `};
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const ImageContainer = styled.div`
   display: flex;
-  width: 500px;
+  flex: 1;
+  justify-content: center;
+  margin-right: 30px;
   padding: 50px;
-  flex-direction: column;
   border: 1px solid #eee;
   border-radius: 3px;
 
   img {
     height: 298px;
-    object-fit: contain;
+  }
+
+  @media (max-width: 600px) {
+    margin: 0 0 20px;
   }
 `;
 
 export const Info = styled.div`
   display: flex;
-  margin-left: 30px;
   flex-direction: column;
   flex: 1;
 

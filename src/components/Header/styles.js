@@ -6,6 +6,7 @@ export const Container = styled.header`
   padding-top: 59px;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 `;
 
 export const Info = styled.div`

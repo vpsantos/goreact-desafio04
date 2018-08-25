@@ -3,23 +3,32 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 export const Product = styled(Link)`
-  display: flex;
+  width: 100%;
   padding: 30px;
+  display: flex;
   flex-direction: column;
   text-decoration: none;
-  text-align: center;
+  align-items: center;
   border: 1px solid #eee;
   border-radius: 3px;
 
   img {
     height: 180px;
-    object-fit: contain;
   }
 
   strong {

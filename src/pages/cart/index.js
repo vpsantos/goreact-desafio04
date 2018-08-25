@@ -11,7 +11,9 @@ import {
   Container, ListContainer, List, Total, Message,
 } from './styles';
 
-const Cart = ({ cart, updateProduct, removeProduct }) => (
+const Cart = ({
+  cart, total, updateProduct, removeProduct,
+}) => (
   <Container>
     {!cart.data.length ? (
       <Message>Não há produtos no carrinho</Message>
@@ -96,7 +98,7 @@ const Cart = ({ cart, updateProduct, removeProduct }) => (
           <strong>Total</strong>
           <span>
             <CurrencyFormat
-              value={cart.total}
+              value={total}
               displayType="text"
               thousandSeparator="."
               prefix="R$"
@@ -124,14 +126,23 @@ Cart.propTypes = {
         subtotal: PropTypes.number,
       }),
     ),
-    total: PropTypes.number.isRequired,
   }).isRequired,
+  total: PropTypes.number.isRequired,
   removeProduct: PropTypes.func.isRequired,
   updateProduct: PropTypes.func.isRequired,
 };
 
+const calculateTotal = (products) => {
+  if (products.length === 0) {
+    return 0;
+  }
+
+  return products.map(product => product.subtotal).reduce((prev, next) => prev + next);
+};
+
 const mapStateToProps = state => ({
   cart: state.cart,
+  total: calculateTotal(state.cart.data),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(CartActions, dispatch);
